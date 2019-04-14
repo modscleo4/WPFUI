@@ -1,11 +1,11 @@
 # WPFUI
 
-##What is WPFUI?
+## What is WPFUI?
 WPFUI is a WPF UI library written in C# and XAML. It supports custom window and dialog box styles.
 
 WPFUI source code is licenced under <a href="https://github.com/modscleo4/WPFUI/blob/master/LICENSE">Apache 2 License</a>
 
-##Build
+## Build
 To build WPFUI, run the following commands:
 ```
 $ git clone https://github.com/modscleo4/WPFUI.git
