@@ -1,0 +1,48 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Modscleo4.WPFUI.Controls">
+    <Style x:Key="PlaceholderTextBoxStyle" TargetType="{x:Type controls:PlaceholderTextBox}">
+        <Setter Property="Background" Value="#00000000" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:PlaceholderTextBox}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+
+                        <Grid x:Name="GridContent" Background="{TemplateBinding Background}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Label x:Name="LabelPlaceholder" Content="{TemplateBinding Placeholder}" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Padding="5,0" Margin="0" Foreground="{TemplateBinding Foreground}" Background="#00000000" />
+                            <TextBox x:Name="TextBox" Text="{TemplateBinding Value}" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Margin="0" VerticalContentAlignment="Center" Background="#00000000" Foreground="{TemplateBinding Foreground}" BorderBrush="{TemplateBinding BorderBrush}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PlaceholderPasswordBoxStyle" TargetType="{x:Type controls:PlaceholderPasswordBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:PlaceholderPasswordBox}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+
+                        <Grid x:Name="GridContent" Background="{TemplateBinding Background}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Label x:Name="LabelPlaceholder" Content="{TemplateBinding Placeholder}" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Padding="5,0" Cursor="IBeam" Margin="0" Foreground="{TemplateBinding Foreground}" Background="#00000000" />
+                            <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" VerticalContentAlignment="Center" Background="#00000000" Foreground="{TemplateBinding Foreground}" BorderBrush="{TemplateBinding BorderBrush}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

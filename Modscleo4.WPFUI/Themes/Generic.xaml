@@ -1,0 +1,27 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:controls="clr-namespace:Modscleo4.WPFUI.Controls">
+    
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/WPFUI;component/Styles/TitleBarStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFUI;component/Styles/PlaceholderInputStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFUI;component/Styles/SearchBoxStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFUI;component/Styles/MenuBarStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFUI;component/Styles/WindowStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WPFUI;component/Styles/DialogWindowStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="controls:TitlebarButton" BasedOn="{StaticResource TitlebarButtonStyle}" />
+    <Style TargetType="controls:TitlebarLabel" BasedOn="{StaticResource TitlebarLabelStyle}" />
+
+    <Style TargetType="controls:PlaceholderTextBox" BasedOn="{StaticResource PlaceholderTextBoxStyle}" />
+    <Style TargetType="controls:PlaceholderPasswordBox" BasedOn="{StaticResource PlaceholderPasswordBoxStyle}" />
+
+    <Style TargetType="controls:SearchBox" BasedOn="{StaticResource SearchBoxStyle}" />
+
+    <Style TargetType="controls:MenuBarItem" BasedOn="{StaticResource MenuBarItemStyle}" />
+
+    <Style TargetType="controls:Window" BasedOn="{StaticResource WindowStyle}" />
+
+    <Style TargetType="controls:DialogWindow" BasedOn="{StaticResource DialogWindowStyle}" />
+</ResourceDictionary>
