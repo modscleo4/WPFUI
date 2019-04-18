@@ -15,7 +15,7 @@ $ msbuild Modscleo4.WPFUI/Modscleo4.WPFUI.csproj
 ---
 Or download from NuGet:
 ```
-nuget install WPFUI
+nuget install Modscleo4.WPFUI
 ```
 
 ## Issues and suggestions
