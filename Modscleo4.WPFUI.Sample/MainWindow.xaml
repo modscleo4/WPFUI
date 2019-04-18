@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Modscleo4.WPFUI.Sample"
-        xmlns:controls="clr-namespace:Modscleo4.WPFUI.Controls;assembly=WPFUI"
+        xmlns:controls="clr-namespace:Modscleo4.WPFUI.Controls;assembly=Modscleo4.WPFUI"
         mc:Ignorable="d"
         Title="Window" Height="450" Width="800" ResizeMode="CanResize" Closing="Window_Closing" SearchboxVisibility="Visible">
 

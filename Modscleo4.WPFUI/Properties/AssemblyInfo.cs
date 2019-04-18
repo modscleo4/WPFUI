@@ -7,7 +7,7 @@ using System.Windows;
 // As informações gerais sobre um assembly são controladas por
 // conjunto de atributos. Altere estes valores de atributo para modificar as informações
 // associada a um assembly.
-[assembly: AssemblyTitle("WPFUI")]
+[assembly: AssemblyTitle("Modscleo4.WPFUI Library")]
 [assembly: AssemblyDescription("A WPF UI Library")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Modscleo4")]

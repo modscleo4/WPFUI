@@ -3,12 +3,12 @@
     xmlns:controls="clr-namespace:Modscleo4.WPFUI.Controls">
     
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/WPFUI;component/Styles/TitleBarStyle.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WPFUI;component/Styles/PlaceholderInputStyle.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WPFUI;component/Styles/SearchBoxStyle.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WPFUI;component/Styles/MenuBarStyle.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WPFUI;component/Styles/WindowStyle.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WPFUI;component/Styles/DialogWindowStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Modscleo4.WPFUI;component/Styles/TitleBarStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Modscleo4.WPFUI;component/Styles/PlaceholderInputStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Modscleo4.WPFUI;component/Styles/SearchBoxStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Modscleo4.WPFUI;component/Styles/MenuBarStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Modscleo4.WPFUI;component/Styles/WindowStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Modscleo4.WPFUI;component/Styles/DialogWindowStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="controls:TitlebarButton" BasedOn="{StaticResource TitlebarButtonStyle}" />

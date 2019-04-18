@@ -25,7 +25,7 @@
                             <Grid x:Name="Main">
                                 <Grid.Style>
                                     <Style TargetType="Grid">
-                                        <Setter Property="Background" Value="#28000000" />
+                                        <Setter Property="Background" Value="#40000000" />
                                         <Setter Property="Margin" Value="0" />
 
                                         <Style.Triggers>
@@ -208,7 +208,7 @@
 
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Self}}" Value="False">
-                <Setter Property="BorderBrush" Value="#01000000" />
+                <Setter Property="BorderBrush" Value="#FF404040" />
             </DataTrigger>
         </Style.Triggers>
     </Style>

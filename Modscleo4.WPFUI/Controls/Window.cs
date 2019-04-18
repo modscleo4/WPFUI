@@ -5,57 +5,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
+using static Modscleo4.WPFUI.NativeMethods;
 
 namespace Modscleo4.WPFUI.Controls
 {
-    #region Internal
-
-    internal enum AccentState
-    {
-        ACCENT_DISABLED = 0,
-        ACCENT_ENABLE_GRADIENT = 1,
-        ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
-        ACCENT_ENABLE_BLURBEHIND = 3,
-        ACCENT_ENABLE_ACRYLICBLURBEHIND = 4,
-        ACCENT_INVALID_STATE = 5
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct AccentPolicy
-    {
-        public AccentState AccentState;
-        public uint AccentFlags;
-        public uint GradientColor;
-        public uint AnimationId;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct WindowCompositionAttributeData
-    {
-        public WindowCompositionAttribute Attribute;
-        public IntPtr Data;
-        public int SizeOfData;
-    }
-
-    internal enum WindowCompositionAttribute
-    {
-        // ...
-        WCA_ACCENT_POLICY = 19
-        // ...
-    }
-
-    #endregion Internal
-
     public class Window : System.Windows.Window
     {
         #region Theme Color
-
-        [DllImport("uxtheme.dll", EntryPoint = "#95")]
-        public static extern uint GetImmersiveColorFromColorSetEx(uint dwImmersiveColorSet, uint dwImmersiveColorType, bool bIgnoreHighContrast, uint dwHighContrastCacheMode);
-        [DllImport("uxtheme.dll", EntryPoint = "#96")]
-        public static extern uint GetImmersiveColorTypeFromName(IntPtr pName);
-        [DllImport("uxtheme.dll", EntryPoint = "#98")]
-        public static extern int GetImmersiveUserColorSetPreference(bool bForceCheckRegistry, bool bSkipCheckOnFail);
 
         public Color ThemeColor
         {
@@ -83,9 +39,6 @@ namespace Modscleo4.WPFUI.Controls
 
         #region Blur
 
-        [DllImport("user32.dll")]
-        internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
-
         private uint _blurOpacity;
         public double BlurOpacity
         {
@@ -97,19 +50,19 @@ namespace Modscleo4.WPFUI.Controls
             set
             {
                 _blurOpacity = (uint)value;
-                EnableBlur();
+                Blur();
             }
         }
 
-        private uint _blurBackgroundColor = 0x550000; /* BGR color format */
+        private readonly uint _blurBackgroundColor = 0x550000; /* BGR color format */
 
-        internal void EnableBlur()
+        internal void Blur(bool enable = true)
         {
             var windowHelper = new WindowInteropHelper(this);
 
             var accent = new AccentPolicy
             {
-                AccentState = AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND,
+                AccentState = (enable) ? AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND : AccentState.ACCENT_DISABLED,
                 AccentFlags = 2,
                 GradientColor = (_blurOpacity << 24) | (_blurBackgroundColor & 0xFFFFFF)
             };
@@ -132,6 +85,25 @@ namespace Modscleo4.WPFUI.Controls
         }
 
         #endregion Blur
+
+        #region Startup Location
+
+        public static readonly DependencyProperty WindowStartupLocationProperty;
+        public new WindowStartupLocation WindowStartupLocation
+        {
+            get
+            {
+                return (WindowStartupLocation)GetValue(WindowStartupLocationProperty);
+            }
+
+            set
+            {
+                SetValue(WindowStartupLocationProperty, value);
+                base.WindowStartupLocation = value;
+            }
+        }
+
+        #endregion Startup Location
 
         #region Searchbox
 
@@ -247,7 +219,7 @@ namespace Modscleo4.WPFUI.Controls
 
         public Window() : base()
         {
-            Loaded += new RoutedEventHandler(CustomWindow_Loaded);
+            Loaded += new RoutedEventHandler(Window_Loaded);
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
@@ -256,6 +228,8 @@ namespace Modscleo4.WPFUI.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata(typeof(Window)));
             ResizeModeProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata(ResizeMode.CanMinimize));
+
+            WindowStartupLocationProperty = DependencyProperty.Register("WindowStartupLocation", typeof(WindowStartupLocation), typeof(Window), new FrameworkPropertyMetadata(WindowStartupLocation.CenterScreen));
 
             SearchEvent = EventManager.RegisterRoutedEvent("Search", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Window));
 
@@ -305,8 +279,6 @@ namespace Modscleo4.WPFUI.Controls
             }
 
             base.OnApplyTemplate();
-
-            EnableBlur();
         }
 
         private void Searchbox_Search(object sender, RoutedEventArgs e)
@@ -315,9 +287,9 @@ namespace Modscleo4.WPFUI.Controls
             RaiseSearchEvent();
         }
 
-        private void CustomWindow_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            Blur(true);
         }
 
         private void BtnMinimize_Click(object sender, RoutedEventArgs e)
