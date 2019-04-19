@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -44,7 +44,7 @@ using System.Windows;
 // As informações da versão de um assembly consistem nos quatro valores a seguir:
 //
 //      Versão Principal
-//      Versão Secundária 
+//      Versão Secundária
 //      Número da Versão
 //      Revisão
 //

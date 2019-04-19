@@ -1,4 +1,4 @@
-﻿using Modscleo4.WPFUI.Controls;
+using Modscleo4.WPFUI.Controls;
 using System.Windows;
 
 namespace Modscleo4.WPFUI

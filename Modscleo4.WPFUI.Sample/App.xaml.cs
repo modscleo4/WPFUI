@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 
 namespace Modscleo4.WPFUI.Sample
 {
@@ -9,7 +9,7 @@ namespace Modscleo4.WPFUI.Sample
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            
+
         }
     }
 }
