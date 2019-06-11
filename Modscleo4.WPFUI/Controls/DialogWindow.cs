@@ -28,12 +28,16 @@ namespace Modscleo4.WPFUI.Controls
                 Content = this,
                 Width = 0,
                 Height = 0,
-                MaxWidth = 640
+                MaxWidth = 640,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
 
             this.message = message;
             this.messageBoxButton = messageBoxButton;
             this.messageBoxImage = messageBoxImage;
+
+            window.Loaded += new RoutedEventHandler(Window_Loaded);
+            window.Closing += new CancelEventHandler(Window_Closing);
 
             window.ShowDialog();
         }
@@ -112,9 +116,6 @@ namespace Modscleo4.WPFUI.Controls
                 }
             }
 
-            window.Loaded += new RoutedEventHandler(Window_Loaded);
-            window.Closing += new CancelEventHandler(Window_Closing);
-
             base.OnApplyTemplate();
         }
 
@@ -129,7 +130,7 @@ namespace Modscleo4.WPFUI.Controls
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             window.SizeToContent = SizeToContent.WidthAndHeight;
-            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            window.UpdateLayout();
 
             // Manually center the MessageBox
             if (window.Owner != null)

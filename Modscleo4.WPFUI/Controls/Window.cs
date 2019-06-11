@@ -17,13 +17,33 @@ namespace Modscleo4.WPFUI.Controls
         {
             get
             {
-                var colorSetEx = GetImmersiveColorFromColorSetEx((uint)GetImmersiveUserColorSetPreference(false, false), GetImmersiveColorTypeFromName(Marshal.StringToHGlobalUni("ImmersiveStartSelectionBackground")), false, 0);
+                if (WinBuild() == 7600 || WinBuild() == 7601)
+                {
+                    uint color = 0;
+                    bool opaque = false;
+                    DwmGetColorizationColor(out color, out opaque);
 
-                return Color.FromArgb(
-                    (byte)((0xFF000000 & colorSetEx) >> 24),
-                    (byte)((0x000000FF & colorSetEx) >> 0),
-                    (byte)((0x0000FF00 & colorSetEx) >> 8),
-                    (byte)((0x00FF0000 & colorSetEx) >> 16));
+                    return Color.FromArgb(
+                        (byte)((0xFF000000 & color) >> 24),
+                        (byte)((0x000000FF & color) >> 0),
+                        (byte)((0x0000FF00 & color) >> 8),
+                        (byte)((0x00FF0000 & color) >> 16));
+
+                }
+                else if (WinBuild() >= 17134)
+                {
+                    var colorSetEx = GetImmersiveColorFromColorSetEx((uint)GetImmersiveUserColorSetPreference(false, false), GetImmersiveColorTypeFromName(Marshal.StringToHGlobalUni("ImmersiveStartSelectionBackground")), false, 0);
+
+                    return Color.FromArgb(
+                        (byte)((0xFF000000 & colorSetEx) >> 24),
+                        (byte)((0x000000FF & colorSetEx) >> 0),
+                        (byte)((0x0000FF00 & colorSetEx) >> 8),
+                        (byte)((0x00FF0000 & colorSetEx) >> 16));
+                }
+                else
+                {
+                    return Color.FromArgb(0xFF, 0x00, 0x78, 0xD7);
+                }
             }
         }
 
@@ -58,30 +78,53 @@ namespace Modscleo4.WPFUI.Controls
 
         internal void Blur(bool enable = true)
         {
-            var windowHelper = new WindowInteropHelper(this);
-
-            var accent = new AccentPolicy
+            if (WinBuild() == 7600 || WinBuild() == 7601)
             {
-                AccentState = (enable) ? AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND : AccentState.ACCENT_DISABLED,
-                AccentFlags = 2,
-                GradientColor = (_blurOpacity << 24) | (_blurBackgroundColor & 0xFFFFFF)
-            };
+                var bb = new DwmBlurbehind
+                {
+                    dwFlags = DwmBlurBehindDwFlags.DwmBbEnable,
+                    Enabled = true
+                };
 
-            var accentStructSize = Marshal.SizeOf(accent);
+                var hwnd = new WindowInteropHelper(this).Handle;
 
-            var accentPtr = Marshal.AllocHGlobal(accentStructSize);
-            Marshal.StructureToPtr(accent, accentPtr, false);
+                HwndSource.FromHwnd(hwnd).CompositionTarget.BackgroundColor = Colors.Transparent;
 
-            var data = new WindowCompositionAttributeData
+                DwmEnableBlurBehindWindow(hwnd, ref bb);
+
+                const int dwmwaNcrenderingPolicy = 2;
+                var dwmncrpDisabled = 2;
+
+                DwmSetWindowAttribute(hwnd, dwmwaNcrenderingPolicy, ref dwmncrpDisabled, sizeof(int));
+            }
+            else if (WinBuild() >= 17134)
             {
-                Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY,
-                SizeOfData = accentStructSize,
-                Data = accentPtr
-            };
+                var windowHelper = new WindowInteropHelper(this);
 
-            SetWindowCompositionAttribute(windowHelper.Handle, ref data);
+                var accent = new AccentPolicy
+                {
+                    AccentState = (enable) ? AccentState.ACCENT_ENABLE_BLURBEHIND : AccentState.ACCENT_DISABLED,
+                    AccentFlags = 2,
+                    GradientColor = (_blurOpacity << 24) | (_blurBackgroundColor & 0xFFFFFF),
+                    AnimationId = 0
+                };
 
-            Marshal.FreeHGlobal(accentPtr);
+                var accentStructSize = Marshal.SizeOf(accent);
+
+                var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+                Marshal.StructureToPtr(accent, accentPtr, false);
+
+                var data = new WindowCompositionAttributeData
+                {
+                    Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY,
+                    SizeOfData = accentStructSize,
+                    Data = accentPtr
+                };
+
+                SetWindowCompositionAttribute(windowHelper.Handle, ref data);
+
+                Marshal.FreeHGlobal(accentPtr);
+            }
         }
 
         #endregion Blur
@@ -220,6 +263,7 @@ namespace Modscleo4.WPFUI.Controls
         public Window() : base()
         {
             Loaded += new RoutedEventHandler(Window_Loaded);
+            Activated += new EventHandler(Window_Activated);
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
@@ -288,6 +332,11 @@ namespace Modscleo4.WPFUI.Controls
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
         {
             Blur(true);
         }
