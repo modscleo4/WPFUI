@@ -8,7 +8,6 @@
         <ResourceDictionary Source="pack://application:,,,/Modscleo4.WPFUI;component/Styles/SearchBoxStyle.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Modscleo4.WPFUI;component/Styles/MenuBarStyle.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Modscleo4.WPFUI;component/Styles/WindowStyle.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Modscleo4.WPFUI;component/Styles/DialogWindowStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="controls:TitlebarButton" BasedOn="{StaticResource TitlebarButtonStyle}" />
@@ -22,6 +21,4 @@
     <Style TargetType="controls:MenuBarItem" BasedOn="{StaticResource MenuBarItemStyle}" />
 
     <Style TargetType="controls:Window" BasedOn="{StaticResource WindowStyle}" />
-
-    <Style TargetType="controls:DialogWindow" BasedOn="{StaticResource DialogWindowStyle}" />
 </ResourceDictionary>

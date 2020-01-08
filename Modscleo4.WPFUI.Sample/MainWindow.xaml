@@ -1,4 +1,4 @@
-<controls:Window x:Class="Modscleo4.WPFUI.Sample.MainWindow"
+﻿<controls:Window x:Class="Modscleo4.WPFUI.Sample.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,10 @@
         xmlns:controls="clr-namespace:Modscleo4.WPFUI.Controls;assembly=Modscleo4.WPFUI"
         mc:Ignorable="d"
         Title="Window" Height="450" Width="800" ResizeMode="CanResize" Closing="Window_Closing" SearchboxVisibility="Visible">
-
+    <controls:Window.ExtraButtons>
+        <controls:TitlebarButton x:Name="btnSettings" Content="⚙" Click="btnSettings_Click" />
+    </controls:Window.ExtraButtons>
+    
     <Grid>
 
     </Grid>

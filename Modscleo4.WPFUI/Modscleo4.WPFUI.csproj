@@ -63,7 +63,7 @@
     <Compile Include="Controls\PlaceholderTextBox.cs" />
     <Compile Include="Controls\TitlebarButton.cs" />
     <Compile Include="Controls\TitlebarLabel.cs" />
-    <Page Include="Styles\DialogWindowStyle.xaml">
+    <Page Include="DialogWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -93,7 +93,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\DialogWindow.cs" />
+    <Compile Include="DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MessageBox.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

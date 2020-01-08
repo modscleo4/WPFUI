@@ -181,6 +181,16 @@
                                             <controls:TitlebarButton.Style>
                                                 <Style TargetType="controls:TitlebarButton">
                                                     <Setter Property="Visibility" Value="Visible" />
+
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Foreground" Value="#FFFFA0A0" />
+                                                        </Trigger>
+
+                                                        <Trigger Property="IsPressed" Value="True">
+                                                            <Setter Property="Foreground" Value="#FFD42D2D" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
                                                 </Style>
                                             </controls:TitlebarButton.Style>
                                         </controls:TitlebarButton>

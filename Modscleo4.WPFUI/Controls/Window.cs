@@ -1,3 +1,4 @@
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -17,11 +18,10 @@ namespace Modscleo4.WPFUI.Controls
         {
             get
             {
-                if (WinBuild() == 7600 || WinBuild() == 7601)
+                var WinBuild = NativeMethods.WinBuild();
+                if (WinBuild == 7600 || WinBuild == 7601)
                 {
-                    uint color = 0;
-                    bool opaque = false;
-                    DwmGetColorizationColor(out color, out opaque);
+                    DwmGetColorizationColor(out uint color, out bool opaque);
 
                     return Color.FromArgb(
                         (byte)((0xFF000000 & color) >> 24),
@@ -30,20 +30,27 @@ namespace Modscleo4.WPFUI.Controls
                         (byte)((0x00FF0000 & color) >> 16));
 
                 }
-                else if (WinBuild() >= 17134)
+                else if (WinBuild >= 17134)
                 {
-                    var colorSetEx = GetImmersiveColorFromColorSetEx((uint)GetImmersiveUserColorSetPreference(false, false), GetImmersiveColorTypeFromName(Marshal.StringToHGlobalUni("ImmersiveStartSelectionBackground")), false, 0);
+                    var regBaseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64);
+                    var regKey = regBaseKey.OpenSubKey(@"Software\Microsoft\Windows\DWM", RegistryKeyPermissionCheck.ReadSubTree);
+                    if  (regKey != null)
+                    {
+                        var value = regKey.GetValue("ColorPrevalence");
+                        if (value != null && Convert.ToBoolean(value))
+                        {
+                            var color = GetImmersiveColorFromColorSetEx((uint)GetImmersiveUserColorSetPreference(false, false), GetImmersiveColorTypeFromName(Marshal.StringToHGlobalUni("ImmersiveStartSelectionBackground")), false, 0);
 
-                    return Color.FromArgb(
-                        (byte)((0xFF000000 & colorSetEx) >> 24),
-                        (byte)((0x000000FF & colorSetEx) >> 0),
-                        (byte)((0x0000FF00 & colorSetEx) >> 8),
-                        (byte)((0x00FF0000 & colorSetEx) >> 16));
+                            return Color.FromArgb(
+                                (byte)((0xFF000000 & color) >> 24),
+                                (byte)((0x000000FF & color) >> 0),
+                                (byte)((0x0000FF00 & color) >> 8),
+                                (byte)((0x00FF0000 & color) >> 16));
+                        }
+                    }
                 }
-                else
-                {
-                    return Color.FromArgb(0xFF, 0x00, 0x78, 0xD7);
-                }
+
+                return Color.FromArgb(0xFF, 0x00, 0x78, 0xD7);
             }
         }
 
@@ -78,7 +85,8 @@ namespace Modscleo4.WPFUI.Controls
 
         internal void Blur(bool enable = true)
         {
-            if (WinBuild() == 7600 || WinBuild() == 7601)
+            var WinBuild = NativeMethods.WinBuild();
+            if (WinBuild == 7600 || WinBuild == 7601)
             {
                 var bb = new DwmBlurbehind
                 {
@@ -97,14 +105,14 @@ namespace Modscleo4.WPFUI.Controls
 
                 DwmSetWindowAttribute(hwnd, dwmwaNcrenderingPolicy, ref dwmncrpDisabled, sizeof(int));
             }
-            else if (WinBuild() >= 17134)
+            else if (WinBuild >= 17134)
             {
                 var windowHelper = new WindowInteropHelper(this);
 
                 var accent = new AccentPolicy
                 {
                     AccentState = (enable) ? AccentState.ACCENT_ENABLE_BLURBEHIND : AccentState.ACCENT_DISABLED,
-                    AccentFlags = 2,
+                    AccentFlags = AccentFlags.DrawAllBorders,
                     GradientColor = (_blurOpacity << 24) | (_blurBackgroundColor & 0xFFFFFF),
                     AnimationId = 0
                 };
@@ -218,7 +226,7 @@ namespace Modscleo4.WPFUI.Controls
 
         #endregion Search Event
 
-        #region ExtraButtons
+        #region Extra Buttons
 
         public static readonly DependencyProperty ExtraButtonsProperty;
         public List<TitlebarButton> ExtraButtons
@@ -234,7 +242,7 @@ namespace Modscleo4.WPFUI.Controls
             }
         }
 
-        #endregion ExtraButtons
+        #endregion Extra Buttons
 
         #region MenuBar
 
@@ -262,7 +270,6 @@ namespace Modscleo4.WPFUI.Controls
 
         public Window() : base()
         {
-            Loaded += new RoutedEventHandler(Window_Loaded);
             Activated += new EventHandler(Window_Activated);
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -271,14 +278,14 @@ namespace Modscleo4.WPFUI.Controls
         static Window()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata(typeof(Window)));
-            ResizeModeProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata(ResizeMode.CanMinimize));
+            ResizeModeProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata(ResizeMode.CanResize));
 
             WindowStartupLocationProperty = DependencyProperty.Register("WindowStartupLocation", typeof(WindowStartupLocation), typeof(Window), new FrameworkPropertyMetadata(WindowStartupLocation.CenterScreen));
 
             SearchEvent = EventManager.RegisterRoutedEvent("Search", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Window));
 
             SearchboxVisibilityProperty = DependencyProperty.Register("SearchboxVisibility", typeof(Visibility), typeof(Window), new FrameworkPropertyMetadata(Visibility.Collapsed));
-            SearchboxValueProperty = DependencyProperty.Register("SearchboxValue", typeof(string), typeof(Window), new FrameworkPropertyMetadata(String.Empty));
+            SearchboxValueProperty = DependencyProperty.Register("SearchboxValue", typeof(string), typeof(Window), new FrameworkPropertyMetadata(string.Empty));
             SearchboxPlaceholderProperty = DependencyProperty.Register("SearchboxPlaceholder", typeof(string), typeof(Window), new FrameworkPropertyMetadata("Search"));
 
             ExtraButtonsProperty = DependencyProperty.Register("ExtraButtons", typeof(List<TitlebarButton>), typeof(Window), new FrameworkPropertyMetadata(new List<TitlebarButton>()));
@@ -331,14 +338,16 @@ namespace Modscleo4.WPFUI.Controls
             RaiseSearchEvent();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Window_Activated(object sender, EventArgs e)
         {
             Blur(true);
+        }
+
+        public void CenterScreen()
+        {
+            Rect area = SystemParameters.WorkArea;
+            Left = area.Left + (area.Width - ActualWidth) / 2;
+            Top = area.Top + (area.Height - ActualHeight) / 2;
         }
 
         private void BtnMinimize_Click(object sender, RoutedEventArgs e)

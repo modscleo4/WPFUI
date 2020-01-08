@@ -21,5 +21,10 @@ namespace Modscleo4.WPFUI.Sample
                 e.Cancel = true;
             }
         }
+
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().ShowDialog();
+        }
     }
 }

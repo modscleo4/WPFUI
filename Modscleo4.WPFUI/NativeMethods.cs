@@ -23,6 +23,15 @@ namespace Modscleo4.WPFUI
         ACCENT_INVALID_STATE = 6
     }
 
+    public enum AccentFlags
+    {
+        DrawLeftBorder = 0x20,
+        DrawTopBorder = 0x40,
+        DrawRightBorder = 0x80,
+        DrawBottomBorder = 0x100,
+        DrawAllBorders = DrawLeftBorder | DrawTopBorder | DrawRightBorder | DrawBottomBorder
+    }
+
     public enum WindowCompositionAttribute
     {
         WCA_UNDEFINED = 0,
@@ -87,7 +96,7 @@ namespace Modscleo4.WPFUI
     public struct AccentPolicy
     {
         public AccentState AccentState;
-        public uint AccentFlags;
+        public AccentFlags AccentFlags;
         public uint GradientColor;
         public uint AnimationId;
     }
