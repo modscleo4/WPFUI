@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Modscleo4")]
 [assembly: AssemblyProduct("Modscleo4 WPFUI")]
-[assembly: AssemblyCopyright("© Modscleo4 2019.")]
+[assembly: AssemblyCopyright("Copyright © Modscleo4 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

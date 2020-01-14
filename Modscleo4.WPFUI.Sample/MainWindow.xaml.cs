@@ -4,7 +4,7 @@ using System.Windows;
 namespace Modscleo4.WPFUI.Sample
 {
     /// <summary>
-    /// Interação lógica para MainWindow.xam
+    /// Interação lógica para MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Controls.Window
     {
@@ -15,7 +15,7 @@ namespace Modscleo4.WPFUI.Sample
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            var result = MessageBox.Show("Are you sure you want to exit?", "", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = MessageBox.Show("Are you sure you want to exit?", "WPFUI Sample", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result != MessageBoxResult.Yes)
             {
                 e.Cancel = true;

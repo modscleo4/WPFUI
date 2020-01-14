@@ -10,8 +10,16 @@
     <controls:Window.ExtraButtons>
         <controls:TitlebarButton x:Name="btnSettings" Content="⚙" Click="btnSettings_Click" />
     </controls:Window.ExtraButtons>
-    
-    <Grid>
 
+    <controls:Window.MenuBar>
+        <controls:Menu Text="File">
+            <controls:MenuItem Text="Openeeeeeeeeee" />
+            <controls:MenuItem Text="Exit" />
+        </controls:Menu>
+        <controls:MenuItem Text="Help" />
+    </controls:Window.MenuBar>
+
+    <Grid>
+        
     </Grid>
 </controls:Window>

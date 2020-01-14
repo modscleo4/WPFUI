@@ -12,9 +12,6 @@ namespace Modscleo4.WPFUI
     public partial class DialogWindow : Controls.Window
     {
         private readonly Window main = Application.Current.MainWindow;
-        private readonly string message;
-        private readonly MessageBoxButton messageBoxButton;
-        private readonly MessageBoxImage messageBoxImage;
 
         public MessageBoxResult Result { get; private set; }
 
@@ -22,22 +19,16 @@ namespace Modscleo4.WPFUI
         {
             InitializeComponent();
 
-            Owner = parent;
-            Title = title;
-
-            this.message = message;
-            this.messageBoxButton = messageBoxButton;
-            this.messageBoxImage = messageBoxImage;
-
-            Loaded += new RoutedEventHandler(DialogWindow_Loaded);
             Closing += new CancelEventHandler(DialogWindow_Closing);
 
-            ShowDialog();
-        }
-
-        public override void OnApplyTemplate()
-        {
+            Owner = parent;
+            Title = title;
             LabelContent.Text = message;
+
+            if (Owner == null)
+            {
+                WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            }
 
             if (messageBoxButton == MessageBoxButton.OK || messageBoxButton == MessageBoxButton.OKCancel)
             {
@@ -89,37 +80,12 @@ namespace Modscleo4.WPFUI
                 }
             }
 
-            base.OnApplyTemplate();
+            ShowDialog();
         }
 
         private void DialogWindow_Closing(object sender, CancelEventArgs e)
         {
             Application.Current.MainWindow = main;
-        }
-
-        private void DialogWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            SizeToContent = SizeToContent.WidthAndHeight;
-            UpdateLayout();
-
-            // Manually center the MessageBox
-            if (Owner != null)
-            {
-                if (Owner.WindowState == WindowState.Maximized)
-                {
-                    Left = (Owner.ActualWidth - ActualWidth) / 2;
-                    Top = (Owner.ActualHeight - ActualHeight) / 2;
-                }
-                else
-                {
-                    Left = Owner.Left + (Owner.ActualWidth - ActualWidth) / 2;
-                    Top = Owner.Top + (Owner.ActualHeight - ActualHeight) / 2;
-                }
-            }
-            else
-            {
-                CenterScreen();
-            }
         }
 
         private void ButtonOk_Click(object sender, RoutedEventArgs e)

@@ -1,4 +1,3 @@
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -73,7 +72,7 @@ namespace Modscleo4.WPFUI.Controls
 
             SearchEvent = EventManager.RegisterRoutedEvent("Search", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SearchBox));
 
-            ValueProperty = DependencyProperty.Register("Value", typeof(string), typeof(SearchBox), new FrameworkPropertyMetadata(String.Empty));
+            ValueProperty = DependencyProperty.Register("Value", typeof(string), typeof(SearchBox), new FrameworkPropertyMetadata(string.Empty));
             PlaceholderProperty = DependencyProperty.Register("Placeholder", typeof(string), typeof(SearchBox), new FrameworkPropertyMetadata("Search"));
         }
 

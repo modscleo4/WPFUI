@@ -6,7 +6,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="WindowStyle" Value="SingleBorderWindow" />
         <Setter Property="MinWidth" Value="150" />
-        <Setter Property="BorderBrush" Value="{Binding ThemeColorBrush, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="BorderBrush" Value="{Binding ThemeColorBrush, RelativeSource={RelativeSource Self}, Mode=OneWay}" />
         <Setter Property="BorderThickness" Value="1" />
 
         <Setter Property="WindowChrome.WindowChrome">
@@ -18,7 +18,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:Window}">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                    <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
 
                         <AdornerDecorator>
@@ -68,8 +68,11 @@
                                         <StackPanel.Style>
                                             <Style TargetType="StackPanel">
                                                 <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="Orientation" Value="Horizontal" />
                                             </Style>
                                         </StackPanel.Style>
+
+                                        <Image x:Name="WindowIcon" Width="24" Height="24" Margin="8,0,0,0" Visibility="{TemplateBinding ShowIcon}" />
 
                                         <controls:TitlebarLabel x:Name="WindowTitle" Content="{TemplateBinding Title}">
                                             <controls:TitlebarLabel.Style>
@@ -83,9 +86,14 @@
                                             </controls:TitlebarLabel.Style>
                                         </controls:TitlebarLabel>
 
-                                        <ItemsControl x:Name="MenuBar" ItemsSource="{TemplateBinding MenuBar}" />
+                                        <ItemsControl x:Name="MenuBar" ItemsSource="{TemplateBinding MenuBar}" VerticalAlignment="Center" Padding="0,2,0,0">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <UniformGrid Rows="1" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
                                     </StackPanel>
-
 
                                     <StackPanel x:Name="Buttons" DockPanel.Dock="Right">
                                         <StackPanel.Style>
@@ -175,7 +183,13 @@
                                             </controls:TitlebarButton.Style>
                                         </controls:TitlebarButton>
 
-                                        <ItemsControl x:Name="ExtraButtons" ItemsSource="{TemplateBinding ExtraButtons}" />
+                                        <ItemsControl x:Name="ExtraButtons" ItemsSource="{TemplateBinding ExtraButtons}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <UniformGrid Rows="1" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
 
                                         <controls:TitlebarButton x:Name="BtnClose" Content="✕">
                                             <controls:TitlebarButton.Style>
@@ -218,7 +232,7 @@
 
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Self}}" Value="False">
-                <Setter Property="BorderBrush" Value="#FF404040" />
+                <Setter Property="BorderBrush" Value="#FF505050" />
             </DataTrigger>
         </Style.Triggers>
     </Style>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Modscleo4.WPFUI"
         xmlns:controls="clr-namespace:Modscleo4.WPFUI.Controls"
         mc:Ignorable="d"
-        Title="DialogWindow" Height="150" Width="335" MaxWidth="640" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="DialogWindow" Height="150" Width="335" MaxWidth="640" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowIcon="Collapsed" ShowInTaskbar="False">
     <Grid Margin="15" MinWidth="300">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="RowText" />

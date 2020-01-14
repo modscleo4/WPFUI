@@ -56,7 +56,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\MenuBarItem.cs" />
+    <Compile Include="Controls\IMenuItem.cs" />
+    <Compile Include="Controls\Menu.cs" />
+    <Compile Include="Controls\MenuItem.cs" />
     <Compile Include="Controls\SearchBox.cs" />
     <Compile Include="Controls\Window.cs" />
     <Compile Include="Controls\PlaceholderPasswordBox.cs" />

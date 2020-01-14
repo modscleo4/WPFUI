@@ -25,6 +25,7 @@ namespace Modscleo4.WPFUI
 
     public enum AccentFlags
     {
+        DrawNoBorder = 0x00,
         DrawLeftBorder = 0x20,
         DrawTopBorder = 0x40,
         DrawRightBorder = 0x80,
@@ -61,6 +62,26 @@ namespace Modscleo4.WPFUI
         WCA_EXCLUDED_FROM_DDA = 24,
         WCA_PASSIVEUPDATEMODE = 25,
         WCA_LAST = 26
+    }
+
+    [Flags]
+    public enum REG_NOTIFY_CHANGE : uint
+    {
+        NAME = 0x1,
+        ATTRIBUTES = 0x2,
+        LAST_SET = 0x4,
+        SECURITY = 0x8
+    }
+
+    public struct DwmColorizationParams
+    {
+        public uint ColorizationColor;
+        public uint ColorizationAfterglow;
+        public uint ColorizationColorBalance;
+        public uint ColorizationAfterglowBalance;
+        public uint ColorizationBlurBalance;
+        public uint ColorizationGlassReflectionIntensity;
+        public uint ColorizationOpaqueBlend;
     }
 
     #endregion Enumerators
@@ -122,6 +143,9 @@ namespace Modscleo4.WPFUI
             var build = RtlGetVersion(out OSVersionInfo);
             return OSVersionInfo.BuildNumber;
         }
+
+        [DllImport("dwmapi.dll", EntryPoint = "#127")]
+        internal static extern void DwmGetColorizationParameters(ref DwmColorizationParams dwmParams);
 
         #region Windows 7
 

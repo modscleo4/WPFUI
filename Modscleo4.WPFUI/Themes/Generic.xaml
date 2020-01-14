@@ -18,7 +18,8 @@
 
     <Style TargetType="controls:SearchBox" BasedOn="{StaticResource SearchBoxStyle}" />
 
-    <Style TargetType="controls:MenuBarItem" BasedOn="{StaticResource MenuBarItemStyle}" />
+    <Style TargetType="controls:MenuItem" BasedOn="{StaticResource MenuItemStyle}" />
+    <Style TargetType="controls:Menu" BasedOn="{StaticResource MenuStyle}" />
 
     <Style TargetType="controls:Window" BasedOn="{StaticResource WindowStyle}" />
 </ResourceDictionary>
